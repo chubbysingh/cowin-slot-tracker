@@ -22,14 +22,22 @@ Once all the above requirements are met, do the following
 4. Make sure Docker Desktop is running. if not, install it.
 5. Run `docker build -t covin --rm .`
 6. Run `docker run -it --name covin-schedule --rm covin`
-7. Run `python covin_slot_tracker.py <DISTRICT_ID> <AGE>`
-      * e.g. `python covin_slot_tracker.py 188 24`
+7. Run `python covin_slot_tracker.py`
+      * e.g. `python covin_slot_tracker.py`
 8. If there is a slot available in the district code you have provided, you will receive an SMS on your phone.
 
 #### Example Usage and Response
 ```
-python covin_slot_tracker.py 200 24
+python covin_slot_tracker.py
+Enter your DistrictId: 149
+Enter your Age: 34
 
+Checking for 18+ age group
+Polling for week of 3-5-2021
+Polling for week of 10-5-2021
+Polling for week of 17-5-2021
+
+Sleeping for 60 seconds before trying again
 43 Slots Available at B.Khera SDH, Civil Hospital Bhiwani 1 for 04-05-2021
 
 Here 200 is the district id for Bhiwani
