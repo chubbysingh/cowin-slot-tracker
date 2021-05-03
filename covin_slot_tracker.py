@@ -87,19 +87,17 @@ def send_message(message):
 
 
 if __name__ == "__main__":
-    #DISTRICT_ID = sys.argv[1]  # 188 for Gurgaon
-    #AGE = sys.argv[2]  # 30 to check in age group 18-45
-    SECRET_TOKEN = "2c61f49100663700e6ffd97eb1be55c9"  # <DUMMY_TWILIO AUTH TOKEN>
-    ACCOUNT_SID = "AC38fd64ca6bfb035cd8c2494300c976ac"  # <DUMMY_TWILIO ACCOUNT SID>
-    TWILIO_PHONE_NUMBER = "+15105647520"  # <TWILIO PHONE NUMBER>
-    CELL_PHONE_NUMBER_1 = "+919650606453"  # <DUMMY_YOUR PHONE NUMBER>
+    SECRET_TOKEN = "<DUMMY_TWILIO AUTH TOKEN>"
+    ACCOUNT_SID = "<DUMMY_TWILIO ACCOUNT SID>"
+    TWILIO_PHONE_NUMBER = "<TWILIO PHONE NUMBER>"
+    CELL_PHONE_NUMBER_1 = "<DUMMY_YOUR PHONE NUMBER>"
 
     DISTRICT_ID = input("Enter your DistrictId: ")
     AGE = input("Enter your Age: ")
 
     client = Client(ACCOUNT_SID, SECRET_TOKEN)
 
-    #send_message("Polling for messages. You will receive an alert once a slot opens up.")
+    send_message("Polling for messages. You will receive an alert once a slot opens up.")
 
     if int(AGE) > 45:
         min_age = 45
@@ -109,14 +107,13 @@ if __name__ == "__main__":
     while True:
         for week in range(0, 3):
             date = get_date(week)
-            #print("\n")
             print("Polling for week of " + date)
             data = ping_cowin(date, DISTRICT_ID)
             available = check_availability(data, min_age)
             if len(available) > 0:
                 msg_body = available
                 print(msg_body)
-                #send_message(msg_body)
+                send_message(msg_body)
             time.sleep(2)
-        print("\n\nSleeping for 60 seconds before trying again")
+        print("\nSleeping for 60 seconds before trying again")
         time.sleep(60)
