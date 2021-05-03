@@ -87,10 +87,10 @@ def send_message(message):
 
 
 if __name__ == "__main__":
-    SECRET_TOKEN = "<DUMMY_TWILIO AUTH TOKEN>"
-    ACCOUNT_SID = "<DUMMY_TWILIO ACCOUNT SID>"
-    TWILIO_PHONE_NUMBER = "<TWILIO PHONE NUMBER>"
-    CELL_PHONE_NUMBER_1 = "<DUMMY_YOUR PHONE NUMBER>"
+    SECRET_TOKEN = "2c61f49100663700e6ffd97eb1be55c9"  # <DUMMY_TWILIO AUTH TOKEN>
+    ACCOUNT_SID = "AC38fd64ca6bfb035cd8c2494300c976ac"  # <DUMMY_TWILIO ACCOUNT SID>
+    TWILIO_PHONE_NUMBER = "+15105647520"  # <TWILIO PHONE NUMBER>
+    CELL_PHONE_NUMBER_1 = "+919650606453"  # <DUMMY_YOUR PHONE NUMBER>
 
     DISTRICT_ID = input("Enter your DistrictId: ")
     AGE = input("Enter your Age: ")
@@ -103,6 +103,8 @@ if __name__ == "__main__":
         min_age = 45
     else:
         min_age = 18
+
+    print("Checking for " + str(min_age) + "+ age group")
 
     while True:
         for week in range(0, 3):
