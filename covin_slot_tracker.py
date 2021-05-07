@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-import sys
-import datetime, time
-import requests, json
+import datetime
+import time
+
+import json
+import requests
 from twilio.rest import Client
 
 
@@ -37,9 +39,11 @@ def ping_cowin(date, district_id):
     json
 
     """
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
     url = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id={district_id}&date={date}".format(
         district_id=district_id, date=date)
-    response = requests.get(url)
+
+    response = requests.get(url, headers=headers)
     return json.loads(response.text)
 
 
@@ -87,12 +91,13 @@ def send_message(message):
 
 
 if __name__ == "__main__":
+
     SECRET_TOKEN = "<DUMMY_TWILIO AUTH TOKEN>"  #
     ACCOUNT_SID = "<DUMMY_TWILIO ACCOUNT SID>"  #
     TWILIO_PHONE_NUMBER = "<TWILIO PHONE NUMBER>"  #
     CELL_PHONE_NUMBER_1 = "<DUMMY_YOUR PHONE NUMBER>"  #
 
-    DISTRICT_ID = input("Enter your DistrictId: ")
+    DISTRICT_IDS = input("Enter your DistrictId: ")
     AGE = input("Enter your Age: ")
 
     client = Client(ACCOUNT_SID, SECRET_TOKEN)
@@ -107,15 +112,17 @@ if __name__ == "__main__":
     print("Checking for " + str(min_age) + "+ age group")
 
     while True:
-        for week in range(0, 3):
-            date = get_date(week)
-            print("Polling for week of " + date)
-            data = ping_cowin(date, DISTRICT_ID)
-            available = check_availability(data, min_age)
-            if len(available) > 0:
-                msg_body = available
-                print(msg_body)
-                send_message(msg_body)
-            time.sleep(2)
+        DISTRICT_ID_ARRAY = list(DISTRICT_IDS.split(" "))
+        for dist_id in DISTRICT_ID_ARRAY:
+            for week in range(0, 3):
+                date = get_date(week)
+                print("Polling for week of " + date + " for district_id " + str(dist_id))
+                data = ping_cowin(date, dist_id)
+                available = check_availability(data, min_age)
+                if len(available) > 0:
+                    msg_body = available + " for " + str(dist_id)
+                    print(msg_body)
+                    send_message(msg_body)
+                time.sleep(2)
         print("\nSleeping for 60 seconds before trying again")
         time.sleep(60)
